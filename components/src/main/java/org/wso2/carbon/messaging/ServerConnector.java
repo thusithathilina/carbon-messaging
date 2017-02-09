@@ -22,8 +22,11 @@ import org.wso2.carbon.messaging.exceptions.ServerConnectorException;
 import java.util.Map;
 
 /**
- * This class represents a server connector. When adding a new server connector, this class needs to be
- * extended, implement the init, destroy, beginMaintenance, endMaintenance methods.
+ * This class represents a server connector. When adding a new server connector to handle inbound requests over
+ * different transport protocols such as http, jms, file, etc., this class needs to be extended, and the relevant
+ * methods needs to be implemented. A server connector initialize ans destroy methods are called during application
+ * startup and shutdown respectively. Similarly, the start-maintenance and end-maintenance methods will be invoked,
+ * when the application runtime needs to put in the maintenance mode and then resume accepting requests.
  */
 public abstract class ServerConnector {
     /**
@@ -33,8 +36,19 @@ public abstract class ServerConnector {
 
     protected State state = State.UNINITIALIZED;
 
-    public ServerConnector(String id) {
+    protected Map<String, String> properties;
+
+    public ServerConnector(String id, Map<String, String> properties) {
         this.id = id;
+        this.properties = properties;
+    }
+
+    /**
+     * Get the properties of the connector.
+     * @return properties.
+     */
+    public Map<String, String> getProperties() {
+        return properties;
     }
 
     /**
@@ -122,7 +136,7 @@ public abstract class ServerConnector {
      *
      * @throws ServerConnectorException when an error occurs during starting the connector.
      */
-    public abstract void start(Map<String, String> parameters) throws ServerConnectorException;
+    public abstract void start() throws ServerConnectorException;
 
     /**
      * Implementation of the connector stop method. Different connectors will use various approach to stop the
