@@ -39,6 +39,10 @@
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon</groupId>
+            <artifactId>org.wso2.carbon.core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.kernel.feature</artifactId>
             <type>zip</type>
         </dependency>
@@ -78,6 +82,7 @@
         </export.package>
         <import.package>
             org.wso2.carbon.kernel.transports.*;version="${carbon.kernel.package.import.version.range}",
+            org.wso2.carbon.kernel.startupresolver.*;version="${carbon.kernel.package.import.version.range}",
             org.slf4j.*;version="${slf4j.logging.package.import.version.range}",
             org.apache.log4j.*,
             org.apache.commons.logging.*
